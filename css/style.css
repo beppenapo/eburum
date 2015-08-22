@@ -1,17 +1,17 @@
 @import url("reset.css");
-/*@import url("icofont/css/font-awesome.min.css");*/
 @import url(http://fonts.googleapis.com/css?family=Maven+Pro:400,700);
 
 html,body, #wrap{height:100%;width:100%;padding:0px;margin:0px;}
-body {font-family: 'Maven Pro', sans-serif;font-size: 15px;color: #34383d;background:white;line-height:1;overflow:hidden;}
+body {font-family: 'Maven Pro', sans-serif;font-size: 1em; color: #34383d;background:white;line-height:1;overflow:hidden;}
 ul.headmenu li a:hover{-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;}
 
 #header, #search, #scheda, #map{z-index:1;}
-#header{position: absolute;top: 0;left: 0;right: 0;width: auto;height: 25px;opacity: 0.99;background: #CBA765;padding: 15px 45px;color:white;}
-#header h1{font-size:30px;font-weight:bold;}
-.head{float:left;margin-top:-15px;}
-/*.head:link, .head:visited, .head a:link, .head a:visited{color:white;font-size:30px;}*/
-.head a:hover{text-decoration:none;}
+#header{position: absolute;top: 0;left: 0;right: 0;height: 3.5em;opacity: 0.99;background: #CBA765;}
+#header h1{font-size:2em;font-weight:bold;}
+#header h1 > span{font-size:1em;}
+#titleWrap{padding-left:4em;color:rgb(255,255,255);width:55%;}
+#headMenuWrap{width:35%;}
+.head{display:inline-block;}
 ul.headmenu{float:right;}
 ul.headmenu li{display:inline-block;margin-left:20px;}
 ul.headmenu li:first-child{margin-left:0px;}
@@ -51,13 +51,14 @@ button[name="signin"]{background: #EAB14A;background: linear-gradient(#EAB14A, #
 button[name="signin"]:hover {background:linear-gradient(#EFB44A, #c17d11);border: 1px solid #CB9B44;}
 
 .inputLabel{display:block;font: normal 10px/20px Arial, Helvetica, sans-serif;cursor:pointer;}
-#geocoder{position:absolute;top:10px;left:50px;width:auto;z-index:1000;}
-#geocoder input{display: inline-block;font-size: 13px;line-height: 18px;box-shadow: 0 0 8px rgba(0, 0, 0, .3);-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
-
-input#query{width: 210px;height: 18px;padding: 4px;color: #555555;border: 1px solid #ccc;}
-
-input[name='find']{cursor: pointer;-webkit-appearance: button;padding:4px 10px;background-color:#7097C4;color:#fff;font-weight:bold;border: 1px solid #ccc;border-bottom-color: #bbb;}
-
+#geocoder{position:absolute;top:10px;left:50px;width:300px;z-index:1000;box-shadow: 0 0 8px rgba(0, 0, 0, .3);}
+#geocoder input{display: inline-block;font-size: 13px;line-height: 18px;}
+input#query{width: 233px;height: 18px;padding: 4px;color: #555555;border-right:none !important;border: 1px solid #ccc;border-radius: 3px 0px 0px 3px;}
+input[name='find']{cursor: pointer;-webkit-appearance: button;padding:4px 10px;background-color:#7097C4;color:#fff;font-weight:bold;border: 1px solid #ccc; margin-left:-5px;border-radius: 0px 3px 3px 0px;}
+#resultSearch{height:auto;max-height:200px;overflow:auto;border:1px solid #ccc;border-top:none !important;background:#7097C4; color:#fff;}
+#resultSearchList li, #hideSearch{ padding: 10px 10px; font-size: 0.7em; cursor:pointer;border-bottom:1px solid #ccc;}
+#resultSearchList li:hover{background-color:#ccc;}
+#hideSearch { display: block; border:none !important;}
 /******* CLASSI GENERICHE *********************/
 .borderRadius{-webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;}
 .borderRadiusTop{-webkit-border-top-left-radius: 10px;-webkit-border-top-right-radius: 10px;-moz-border-radius-topleft: 10px;-moz-border-radius-topright: 10px;border-top-left-radius: 10px;border-top-right-radius: 10px;}
@@ -66,3 +67,6 @@ input[name='find']{cursor: pointer;-webkit-appearance: button;padding:4px 10px;b
 .opacity{opacity: 0.50;filter: Alpha(opacity=50); /* IE8 and earlier */}
 .cursor{cursor:pointer;}
 .hidden{display:none;}
+
+/********* openlayers ********/
+.olControlAttribution {font-size: smaller;right: 3px;bottom: 1px !important;position: absolute;display: block;background:rgba(255,255,255,0.7);border-radius:5px; padding:2px 5px;}

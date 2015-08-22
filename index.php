@@ -6,44 +6,45 @@ session_start();
 <html>
 <head>
  <meta charset="utf-8" />
- <meta name="generator" content="gedit" >
+ <meta name="generator" content="Sublime Text2" >
  <meta name="author" content="Giuseppe Naponiello" >
  <meta name="robots" content="INDEX,FOLLOW" />
- <meta name="copyright" content="&copy;2014 Arc-Team" />
+ <meta name="copyright" content="&copy;2015 Arc-Team" />
  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
- <meta name="description"  content="WebGis e bibliografia condivisa sugli scavi e sugli studi di antropolgia fisica rilasciati con licenze open data" />
- <meta name="keywords"  content="webgis, antropologia, bioarcheologia, archeologia, medicina, paleopatologia, osteometria, open data, " />
+ <meta name="description" content="Mappa di comunità libera e condivisa del territorio di Eboli e della valle del Sele" />
+ <meta name="keywords"  content="webgis, comunity, storia, archeologia, ambiente, open source, open data" />
  <!-- Start Of Social Graph Protocol Meta Data -->
  <meta property="og:locale" content="it_IT" />
  <meta property="og:type" content="website" />
- <meta property="og:description" content="OpenBones" />
- <meta property="og:title" content="OpenBones" />
- <meta property="og:url" content="http://www.openbones.it" />
- <meta property="og:site_name" content="OpenBones" />
+ <meta property="og:description" content="Eburum" />
+ <meta property="og:title" content="Eburum" />
+ <meta property="og:url" content="http://184.106.205.13/eburum/" />
+ <meta property="og:site_name" content="Eburum" />
  <!--<meta property="fb:admins" content="833954272" />-->
  <!-- End Of Social Graph Protocol Meta Data -->
 
- <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css' />
  <link href="css/reset.css" rel="stylesheet" media="screen" />
  <link href="css/style.css" rel="stylesheet" media="screen" />
  <link href="css/icofont/css/font-awesome.min.css" rel="stylesheet" media="screen" />
 
- <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
- <script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
-
- <title>OpenBones</title>
+ <title>Eburum</title>
 </head>
 <body onload="init()">
  <div id="wrap">
   <header id="header">
-   <h1 class="head textShadow"><a href="#">#OpenBones</a></h1>
-   <ul class="headmenu">
-    <li><a href="#" class="textShadow"><i class="fa fa-home"></i></a></li>
-    <li><a href="#" class="openScheda textShadow"><i class="fa fa-map-marker"></i></a></li>
-    <li><a href="#" class="openLogin textShadow"><i class="fa fa-user"></i></a></li>
-    <li><a href="#" class="textShadow"><i class="fa fa-question"></i></a></li>
-    <li><a href="#" class="openSearch textShadow"><i class="fa fa-search"></i></a></li>
-   </ul>
+   <div id="titleWrap" class="head">
+    <h1 class="textShadow">Eburum</h1>
+    <h2 class="textShadow">Mappa libera e condivisa delle evidenze storiche, archeologiche e naturalistiche del territorio di Eboli</h2>
+   </div>
+   <div id="headMenuWrap" class="head">
+    <ul class="headmenu">
+     <!--<li><a href="#" class="textShadow"><i class="fa fa-home"></i></a></li>-->
+     <li><a href="#" class="openScheda textShadow"><i class="fa fa-map-marker"></i></a></li>
+     <li><a href="#" class="openLogin textShadow"><i class="fa fa-user"></i></a></li>
+     <!--<li><a href="#" class="textShadow"><i class="fa fa-question"></i></a></li>-->
+     <li><a href="#" class="openSearch textShadow"><i class="fa fa-search"></i></a></li>
+    </ul>
+   </div> 
   </header>
 
   <div id="content">
@@ -55,11 +56,10 @@ session_start();
    </section>
    <section id="map">
     <div id="mapDiv"></div>
-    <div id="geocoder" class="opacity">
-     <form name="input" action="javascript: submitform();" method="post" class="geocoder">
-      <input type="text" id="query" name="query" value="" placeholder="trova indirizzo"/>
-      <input type="submit" name="find" value="cerca" />
-     </form>
+    <div id="geocoder">
+     <input type="search" id="query" name="query" value="" placeholder="trova indirizzo"/>
+     <input type="submit" name="find" id="geoSearch" value="cerca" />
+     <div id="resultSearch"><ul id="resultSearchList"></ul><span id='hideSearch'>chiudi lista</span></div>
     </div>
    </section>
    <section id="login">
@@ -109,168 +109,9 @@ session_start();
    </section>
   </div>
  </div><!-- wrap -->
-
-<script type="text/javascript">
-//JQUERY//
-  $(document).ready(function() {
-   $('#closeSearch a').click(function(){
-    $('#search').removeClass('aperto');
-    $('#search, #map').animate({right:'-=16%'});
-   });
-   $('.openSearch').click(function(){
-    $('#search').toggleClass('aperto');
-    if($('#search').hasClass('aperto')){
-     $('#search, #map').animate({right:'+=16%'});
-    }else{
-     $('#search, #map').animate({right:'-=16%'});
-    }    
-   });
-
-   $('#closeScheda a').click(function(){
-    $('#scheda').removeClass('aperto');
-    $('#scheda, #map').animate({left:'-=20%'});
-   });
-   $('.openScheda').click(function(){
-    $('#scheda').toggleClass('aperto');
-    if($('#scheda').hasClass('aperto')){
-     $('#scheda, #map').animate({left:'+=20%'});
-    }else{
-     $('#scheda, #map').animate({left:'-=20%'});
-    }    
-   });
-   
-   $('#login').hide();
-   $('.openLogin').click(function(){$('#login').fadeIn("fast");});
-   $('#closeLogin a').click(function(){$('#login').fadeOut("fast");});
-
-   $('#newUsr').hide();
-   $('.toggle').click(function(){$('.toggled').slideToggle('fast');});
-
-   $('#query').focus(function(){$(this).addClass('focus');}).blur(function(){$(this).removeClass('focus');});
-   $('#geocoder').hover(
-    function(){$(this).stop().fadeTo('slow', 1);},
-    function(){$(this).stop().fadeTo('slow', 0.5);}
-   );
-
-   $('input[name="signin"]').click(function(){
-     var username = $('#username').val();
-     var email = $('#email').val();
-     var checkPwd = $('#checkPwd').val();
-     var pwd = $('#pwd');
-     var privacy = $("input[name='formUsrRadio']:checked").val();
-     var link = $('#link').val();
-     var descrUsr = $('#descrUsr').val();
-     console.log(username+' '+email+' '+pwd);
-     //controllo i campi obbligatori
-     if(!username){
-       $('#username').addClass('error');
-       //$('.errorDiv').text('Inserisci uno username, il tuo nome vero o il nome dell\'azienda');
-       return false;
-     }else{
-       $('#username').removeClass('error');
-       //$('.errorDiv').text('');
-     }
-     if(!email){
-       $('#email').addClass('error');
-       //$('.errorDiv').text('Inserisci un indirizzo email valido');
-       return false;
-     }else{
-       $('#email').removeClass('error');
-       //$('.errorDiv').text('');
-     }
-     if(!pwd){
-       $('#pwd').addClass('error');
-       //$('.errorDiv').text('Devi digitare una password!');
-       return false;
-     }else{
-       $('#pwd').removeClass('error');
-       //$('.errorDiv').text('');
-     }
-     if(pwd && !checkPwd){
-       $('#checkPwd').addClass('error');
-       //$('.errorDiv').text('Devi ridigitare la password appena inserita!');
-       return false;
-     }else{
-       $('#checkPwd').removeClass('error');
-       //$('.errorDiv').text('');
-     }
-   });
-  });
-
-//OPENLAYERS//
-var map,format,extent;
-
-function init() {
- OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
- format = 'image/png';
-
- map = new OpenLayers.Map('mapDiv', {
-      projection: new OpenLayers.Projection("EPSG:3857"),
-      displayProjection: new OpenLayers.Projection("EPSG:4326"),
-      units: "m",
-      maxResolution: "auto",
-      controls: [
-       new OpenLayers.Control.Navigation(),
-       new OpenLayers.Control.MousePosition(),
-       new OpenLayers.Control.Zoom(),
-       new OpenLayers.Control.TouchNavigation({dragPanOptions: {enableKinetic: true}})
-      ]
- });
-
- var arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg"];
-            
- var osm = new OpenLayers.Layer.OSM("MapQuest-OSM Tiles", arrayOSM, {
-                attribution: "Data, imagery and map information provided by <a href='http://www.mapquest.com/'  target='_blank'>MapQuest</a>, <a href='http://www.openstreetmap.org/' target='_blank'>Open Street Map</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/' target='_blank'>CC-BY-SA</a>  <img src='http://developer.mapquest.com/content/osm/mq_logo.png' border='0'>",
-                transitionEffect: "resize"
- });
- map.addLayer(osm);
- /*
- var realvista = new OpenLayers.Layer.WMS("real", "http://213.215.135.196/reflector/open/service?", {
-        layers: 'rv1',
-        format: 'image/jpeg',
-        attribution: "RealVista1.0 WMS OPEN di e-GEOS SpA - CC BY SA"
- });
- map.addLayer(realvista);
- */
-
- 
- extent = new OpenLayers.Bounds(712648.863, 4351392.688, 2245377.457, 5967512.923);
- if (!map.getCenter()) {map.zoomToExtent(extent);}
-}
-
-function submitform() {
-   var queryString = document.forms[0].query.value;
-   OpenLayers.Request.POST({
-       url: "http://www.openrouteservice.org/php/OpenLSLUS_Geocode.php",
-       scope: this,
-       failure: this.requestFailure,
-       success: this.requestSuccess,
-       headers: {"Content-Type": "application/x-www-form-urlencoded"},
-       data: "FreeFormAdress=" + encodeURIComponent(queryString) + "&MaxResponse=1"
-   });
-}
-
-function requestSuccess(response) {
-   var format = new OpenLayers.Format.XLS();
-   var output = format.read(response.responseXML);
-   if (output.responseLists[0]) {
-       var geometry = output.responseLists[0].features[0].geometry;
-       var foundPosition = new OpenLayers.LonLat(geometry.x, geometry.y).transform(
-               new OpenLayers.Projection("EPSG:4326"),
-               map.getProjectionObject()
-               );
-       map.setCenter(foundPosition, 16);
-   } else {
-       alert("Nessun indirizzo trovato!");
-   }
-}
-
-function requestFailure(response) {
-   alert("Errore di comunicazione con il server, riprova!");
-} 
-</script>
+ <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+ <script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
+ <script src="lib/jq.js" type="text/javascript"></script>
+ <script src="lib/map.js" type="text/javascript"></script>
 </body>
 </html>
