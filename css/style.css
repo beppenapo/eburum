@@ -1,0 +1,68 @@
+@import url("reset.css");
+/*@import url("icofont/css/font-awesome.min.css");*/
+@import url(http://fonts.googleapis.com/css?family=Maven+Pro:400,700);
+
+html,body, #wrap{height:100%;width:100%;padding:0px;margin:0px;}
+body {font-family: 'Maven Pro', sans-serif;font-size: 15px;color: #34383d;background:white;line-height:1;overflow:hidden;}
+ul.headmenu li a:hover{-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;}
+
+#header, #search, #scheda, #map{z-index:1;}
+#header{position: absolute;top: 0;left: 0;right: 0;width: auto;height: 25px;opacity: 0.99;background: #CBA765;padding: 15px 45px;color:white;}
+#header h1{font-size:30px;font-weight:bold;}
+.head{float:left;margin-top:-15px;}
+/*.head:link, .head:visited, .head a:link, .head a:visited{color:white;font-size:30px;}*/
+.head a:hover{text-decoration:none;}
+ul.headmenu{float:right;}
+ul.headmenu li{display:inline-block;margin-left:20px;}
+ul.headmenu li:first-child{margin-left:0px;}
+ul.headmenu li a{font-size:25px;color:#FFF;-webkit-backface-visibility: hidden;}
+ul.headmenu li a:hover{color:#5C3D29;}
+.closeDiv{width:100%;height:25px; background:#969696;text-align:right;}
+.closeDiv i{font-size:20px;padding:2px 10px;color:#eaebeb;}
+
+#search{position:absolute;right:-20%;top:55px;bottom:0;width:20%;background: #eaebeb;}
+#scheda{position:absolute;top:55px;left:-15%;bottom:0;width:15%;background: #eaebeb;}
+#map{position:absolute;top:55px;bottom:0;left:0;right:0;background:#FFFFFF;}
+#mapDiv{position:relative;width:100%;height:100%;}
+#login{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:2000;}
+#logged{position:absolute;top:50px;right:20px;width:200px;height:300px;background:#fff;z-index:2000;}
+#loginForm{position:absolute;top:5%;left:30%;right:30%;background:#fff;box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px; -webkit-box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;}
+#usrImg{position: relative;height: 60px;display: inline-block;vertical-align: top;}
+
+.log{margin: 20px auto; max-width: 90%; max-height: 30%; overflow-y: auto; overflow-x: hidden; color: #666;}
+.log h1{display: block;color: #fff;font-size:1.5em;text-align:center;line-height:1.5em;}
+.log h1>span{display:block;font-size:.7em;}
+.log p{margin:5px 0px; text-align:justify;}
+.log input[type="text"], .log input[type="password"], .log input[type="email"], .log textarea, .log select {color: #555;height: 25px;line-height:15px;width:95%;padding: 0px 0px 0px 10px;margin-top: 2px;border: 1px solid #E5E5E5;background: #FBFBFB;outline: 0;-webkit-box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);font: normal 10px/20px Arial, Helvetica, sans-serif;}
+
+.ur h1{background:#9DC45F;}
+.fb h1{background: #4c69ba;}
+.nu{max-height:70%;}
+.nu h1{background:#EAB14A;}
+
+
+.button {border-radius: 5px;-webkit-border-radius: 5px;-moz-border-border-radius: 5px;padding: 10px;color: #FFF;text-shadow: 1px 1px 1px #949494;cursor:pointer;margin:10px auto;width:100%; font-size:1.2em; border:1px solid transparent;}
+
+button[name="login"]{background: #80A24A;background: linear-gradient(#80A24A, #8A9F69);}
+button[name="login"]:hover {background:linear-gradient(#9DC45F, #8AA560);border: 1px solid #80A24A;}
+a#fbLog{background: #4c69ba; background: linear-gradient(#4c69ba, #3b55a0);display:block;width:95% !important;text-align:center;}
+a#fbLog:hover{background: linear-gradient(#5b7bd5, #4864b1); border-bottom-color: #3b5998; border-left-color: #4961a8; border-right-color: #4961a8; border-top-color: #5874c3; box-shadow: inset 0 1px 0 #607fd6;} 
+button[name="signin"]{background: #EAB14A;background: linear-gradient(#EAB14A, #CB9B44);}
+button[name="signin"]:hover {background:linear-gradient(#EFB44A, #c17d11);border: 1px solid #CB9B44;}
+
+.inputLabel{display:block;font: normal 10px/20px Arial, Helvetica, sans-serif;cursor:pointer;}
+#geocoder{position:absolute;top:10px;left:50px;width:auto;z-index:1000;}
+#geocoder input{display: inline-block;font-size: 13px;line-height: 18px;box-shadow: 0 0 8px rgba(0, 0, 0, .3);-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+
+input#query{width: 210px;height: 18px;padding: 4px;color: #555555;border: 1px solid #ccc;}
+
+input[name='find']{cursor: pointer;-webkit-appearance: button;padding:4px 10px;background-color:#7097C4;color:#fff;font-weight:bold;border: 1px solid #ccc;border-bottom-color: #bbb;}
+
+/******* CLASSI GENERICHE *********************/
+.borderRadius{-webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;}
+.borderRadiusTop{-webkit-border-top-left-radius: 10px;-webkit-border-top-right-radius: 10px;-moz-border-radius-topleft: 10px;-moz-border-radius-topright: 10px;border-top-left-radius: 10px;border-top-right-radius: 10px;}
+.textShadow{text-shadow:1px 1px 1px #545454;}
+.focus, .error{border:1px solid #CC4B1C !important;}
+.opacity{opacity: 0.50;filter: Alpha(opacity=50); /* IE8 and earlier */}
+.cursor{cursor:pointer;}
+.hidden{display:none;}
