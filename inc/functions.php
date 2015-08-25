@@ -9,6 +9,6 @@ function checkuser($ffname,$femail){
   } 
   $query = "INSERT INTO eburum.login (fbmail) VALUES ('$femail');";
   $result = pg_query($connection, $query);
-  if(!$result){	die("Errore nella query: \n" . pg_last_error($connection));}	
+  if(!$result){	die("Errore nella query: \n" . pg_last_error($connection));}
 }
 ?>

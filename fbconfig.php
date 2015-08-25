@@ -1,10 +1,11 @@
 <?php
+ini_set('display_errors', 1);
 require 'inc/src/facebook.php'; 
 require 'inc/functions.php';  
 $facebook = new Facebook(array(
   'appId'  => '377540852406533',   // Facebook App ID 
   'secret' => '644174ae1cd1069aeee159bacc72aa94',  // Facebook App Secret
-  'cookie' => true,	
+  'cookie' => true,
 ));
 $user = $facebook->getUser();
 

@@ -1,6 +1,17 @@
 <?php
 session_start();
-//require_once("inc/db.php");
+require("inc/dbconfig.php");
+
+#select tipo
+$tipo="select * from $schema.tipo order by tipo asc;";
+$tipoquery = pg_query($connection, $tipo);
+#select stato conservazione
+$sc="select * from $schema.sc order by sc asc;";
+$scquery = pg_query($connection, $sc);
+#select accessibilità
+$acc="select * from $schema.acc order by acc asc;";
+$accquery = pg_query($connection, $acc);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +36,7 @@ session_start();
 
  <link href="css/reset.css" rel="stylesheet" media="screen" />
  <link href="css/style.css" rel="stylesheet" media="screen" />
- <link href="css/icofont/css/font-awesome.min.css" rel="stylesheet" media="screen" />
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
  <title>Eburum</title>
 </head>
@@ -38,11 +49,11 @@ session_start();
    </div>
    <div id="headMenuWrap" class="head">
     <ul class="headmenu">
-     <!--<li><a href="#" class="textShadow"><i class="fa fa-home"></i></a></li>-->
-     <li><a href="#" class="openScheda textShadow"><i class="fa fa-map-marker"></i></a></li>
-     <li><a href="#" class="openLogin textShadow"><i class="fa fa-user"></i></a></li>
+     <!--<li><a href="#" class="textShadow"><i class="fa fa-home"></i></a></li>
+     <li><a href="#" class="openScheda textShadow"><i class="fa fa-map-marker"></i></a></li>-->
      <!--<li><a href="#" class="textShadow"><i class="fa fa-question"></i></a></li>-->
-     <li><a href="#" class="openSearch textShadow"><i class="fa fa-search"></i></a></li>
+     <li><a href="#" class="openScheda textShadow" title="cerca un punto di interesse"><i class="fa fa-search"></i></a></li>
+     <li><a href="#" class="openLogin textShadow" title="entra nell'area di lavoro"><i class="fa fa-user"></i></a></li>
     </ul>
    </div> 
   </header>
@@ -51,66 +62,90 @@ session_start();
    <section id="search">
      <div id="closeSearch" class="closeDiv"><a href="#"><i class="fa fa-times"></i></a></div>
    </section>
+   
    <section id="scheda">
      <div id="closeScheda" class="closeDiv"><a href="#"><i class="fa fa-times"></i></a></div>
+     <section id="lastPoi">
+      <header>Ultimi punti inseriti</header>
+      <article>
+      
+      </article>
+     </section>
+     <section id="filtri">
+      <header>Cerca punto</header>
+      <article>
+       <input type="text" id="cercaNome" name="cerca" placeholder="cerca per nome">
+       <select name="cerca" id="cercaTipo" required>
+        <option value="" selected>-- tipo --</option>
+        <?php
+         while ($tipi = pg_fetch_assoc($tipoquery)) {
+          echo '<option value="'.$tipi['id'].'">'.$tipi['tipo'].'</option>';
+         }
+        ?>
+       <select>
+       <select name="cerca" id="cercaSc" required>
+        <option value="" selected>-- stato di conservazione --</option>
+        <?php
+         while ($stato = pg_fetch_assoc($scquery)) {
+          echo '<option value="'.$stato['id'].'">'.$stato['sc'].'</option>';
+         }
+        ?>
+       <select>
+       <select name="cerca" id="cercaAcc" required>
+        <option value="" selected>-- accessibilità --</option>
+        <?php
+         while ($access = pg_fetch_assoc($accquery)) {
+          echo '<option value="'.$access['id'].'">'.$access['acc'].'</option>';
+         }
+        ?>
+       <select>
+       <label style="margin-bottom:5px;">Area accessibile ai disabili <input type="checkbox" name="dis"></label>
+       <button type="button" id="filtra" name="filtra">filtra risultati</button>
+      </article>
+     </section>
+     
+     <section id="bottomScheda">
+      <footer>
+       <small>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" title="Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale" alt="Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale"><i class="fa fa-creative-commons"></i> CC-BY-SA</a> |
+        <a href="https://github.com/beppenapo/eburum" title="codice sorgente" alt="codice sorgente" target="_blank"><i class="fa fa-github"></i> sorgente</a> |
+        <a href="#" title="dettagli sulle licenze utilizzate"><i class="fa fa-question"></i> licenze</a>
+       </small>
+      </footer>
+     </section>
    </section>
    <section id="map">
     <div id="mapDiv"></div>
     <div id="geocoder">
      <input type="search" id="query" name="query" value="" placeholder="trova indirizzo"/>
-     <input type="submit" name="find" id="geoSearch" value="cerca" />
+     <input type="submit" name="find" id="geoSearch" class="fa fa-search" value="&#xf002" />
      <div id="resultSearch"><ul id="resultSearchList"></ul><span id='hideSearch'>chiudi lista</span></div>
     </div>
-   </section>
-   <section id="login">
-    <div id="loginForm" class="borderRadius">
-     <div id="closeLogin" class="closeDiv borderRadiusTop"><a href="#"><i class="fa fa-times"></i></a></div>
-     <?php if ($_SESSION['id']): ?> 
-      <div class="span4">
-       <ul class="nav nav-list">
-        <li class="nav-header">Image</li>
-        <li><img src='https://graph.facebook.com/<?php echo $_SESSION["id"]; ?>/picture?type=large' height="20"/></li>
-        <li><?php echo $_SESSION['fullname']; ?></li>
-        <div><a href="logout.php">Logout</a></div>
-       </ul>
-      </div>
-     <?php else: ?>     <!-- Before login --> 
-     <form action="" method="post" class="log">
-       <h1 class="textShadow toggle">Utente registrato <span>Inserisci dati login.</span></h1>
-       <div id="usrReg" class="toggled">
-        <input id="email" type="email" name="email" placeholder="inserisci email" />
-        <input id="pwd" type="password" name="pwd" placeholder="Inserisci password" />
-        <a href="fbconfig.php" target="_top">Login with Facebook</a>
-        <label>
-         <span>&nbsp;</span> 
-         <input type="button" class="button" value="login" /> 
-        </label>
-       </div>    
-     </form>
-
-     <form action="" method="post" class="log log2">
-       <h1 class="textShadow toggle">Nuovo utente <span>I campi con l'asterisco sono obbligatori.</span></h1>
-       <div id="newUsr" class="toggled">
-        <textarea id="username" name="username" placeholder="*Username"></textarea>
-        <input id="email" type="text" name="email" value='' placeholder="*Inserisci email" />
-        <input id="pwd" type="password" name="pwd" value='' placeholder="*Inserisci password" />
-        <input id="checkPwd" type="password" name="checkPwd" value='' placeholder="*Inserisci di nuovo la password" />
-        <label for="radio1" class="inputLabel"><input type="radio" name="formUsrRadio" id="radio1" value="1" checked /> Voglio che la mia mail sia visibile a tutti gli utenti</label>
-        <label for="radio2" class="inputLabel"><input type="radio" name="formUsrRadio" id="radio2" value="2" /> Voglio che la mia mail sia visibile solo agli utenti registrati</label>
-        <label for="radio3" class="inputLabel"><input type="radio" name="formUsrRadio" id="radio3" value="3" /> Non voglio che la mia mail sia visibile</label>
-        <textarea id="link" name="link" placeholder="Inserisci un link di riferimento"></textarea>
-        <textarea id="descrUsr" name="descrUsr" placeholder="Inserisci una breve descrizione su di te e sul tuo lavoro" style="height:50px;"></textarea>
-        <input type="button" class="button" name="signin" value="registrati!" /> 
-        <div style="text-align:center; color:#CC4B1C;margin:5px auto;" class="errorDiv"></div>
-       </div>    
-     </form>
-     <?php endif ?>
+    <div id="baseLayer">
+     <label for="sat" class="checked">Satellite</label>
+     <label for="osm">Cartina</label>
+     <input type="radio" name="base" id="sat" value="sat" onclick="map.setBaseLayer(realvista)" checked>
+     <input type="radio" name="base" id="osm" value="osm" onclick="map.setBaseLayer(osm)">
     </div>
    </section>
-  </div>
+
+   <section id="login"> 
+    <div id="loginForm" class="borderRadius">
+     <div id="closeLogin" class="closeDiv borderRadiusTop"><a href="#"><i class="fa fa-times"></i></a></div>
+      <div id="usrReg">
+        <h1>Se hai intenzione di fare il login è perché vuoi collaborare a migliorare la mappa di comunità...e per questo ti ringraziamo!!!</h1>
+        <p>In questa prima fase di sperimentazione non ti verrà chiesto di creare alcun account, se sei qui è perché sicuramente hai già effettuato una regstrazione da qualche parte nella rete, a noi basta, quindi clicca su uno dei social presenti per accedere all'area di lavoro</p>
+        <p>Per il momento è possibile accedere solo tramite facebook, un po' di pazienza e ne verranno aggiunti anche altri!</p>
+        <a href="fbconfig.php" id="fbLog" class="button" target="_top"><i class="fa fa-facebook"></i> Facebook</a>
+       </div>
+    </div>
+   </section>
+
+  </div><!--content-->
  </div><!-- wrap -->
  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
  <script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
+ <script src="http://dev.openlayers.org/addins/loadingPanel/trunk/lib/OpenLayers/Control/LoadingPanel.js" type="text/javascript"></script>
  <script src="lib/jq.js" type="text/javascript"></script>
  <script src="lib/map.js" type="text/javascript"></script>
 </body>
