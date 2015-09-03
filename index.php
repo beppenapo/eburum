@@ -99,7 +99,7 @@ $accquery = pg_query($connection, $acc);
          }
         ?>
        <select>
-       <label style="margin-bottom:5px;">Area accessibile ai disabili <input type="checkbox" name="dis"></label>
+       <label for="dis">Area accessibile ai disabili <input id="dis" type="checkbox" name="dis"></label>
        <button type="button" id="filtra" name="filtra">filtra risultati</button>
       </article>
      </section>
