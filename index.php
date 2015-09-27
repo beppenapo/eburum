@@ -42,21 +42,7 @@ $accquery = pg_query($connection, $acc);
 </head>
 <body onload="init()">
  <div id="wrap">
-  <header id="header">
-   <div id="titleWrap" class="head">
-    <h1 class="textShadow">Eburum</h1>
-    <h2 class="textShadow">Mappa libera e condivisa delle evidenze storiche, archeologiche e naturalistiche del territorio di Eboli</h2>
-   </div>
-   <div id="headMenuWrap" class="head">
-    <ul class="headmenu">
-     <!--<li><a href="#" class="textShadow"><i class="fa fa-home"></i></a></li>
-     <li><a href="#" class="openScheda textShadow"><i class="fa fa-map-marker"></i></a></li>-->
-     <!--<li><a href="#" class="textShadow"><i class="fa fa-question"></i></a></li>-->
-     <li><a href="#" class="openScheda textShadow" title="cerca un punto di interesse"><i class="fa fa-search"></i></a></li>
-     <li><a href="#" class="openLogin textShadow" title="entra nell'area di lavoro"><i class="fa fa-user"></i></a></li>
-    </ul>
-   </div> 
-  </header>
+ <?php require('inc/header.php'); ?>
 
   <div id="content">
    <section id="search">
@@ -101,6 +87,7 @@ $accquery = pg_query($connection, $acc);
        <select>
        <label for="dis" class="pointer"><input id="dis" type="checkbox" name="dis"> Area accessibile ai disabili</label>
        <button type="button" id="filtra" name="filtra">filtra risultati</button>
+       <span>Sess: <?php if(isset($_SESSION['email'])){echo $_SESSION['email'];}else{echo "no session";} ?></span>
       </article>
      </section>
      
@@ -143,6 +130,8 @@ $accquery = pg_query($connection, $acc);
 
   </div><!--content-->
  </div><!-- wrap -->
+ 
+ <input type="hidden" id="sessione" value="<?php echo $_SESSION['id']; ?>">
  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
  <script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
  <script src="http://dev.openlayers.org/addins/loadingPanel/trunk/lib/OpenLayers/Control/LoadingPanel.js" type="text/javascript"></script>

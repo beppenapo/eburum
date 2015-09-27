@@ -16,7 +16,7 @@ if ($user) {
     $fbuname = $user_profile['username'];  // To Get Facebook Username
     $fbfullname = $user_profile['name']; // To Get Facebook full name
     $femail = $user_profile['email'];    // To Get Facebook email ID
-    
+
     $check = pg_query($connection,"select email from eburum.utenti where email='$femail'");
     $check = pg_num_rows($check);
     if ($check == 0) { 
