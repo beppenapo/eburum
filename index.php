@@ -2,6 +2,9 @@
 session_start();
 require("inc/dbconfig.php");
 
+$_SESSION['username'] = 'beppenapo';
+
+
 #select tipo
 $tipo="select * from $schema.tipo order by tipo asc;";
 $tipoquery = pg_query($connection, $tipo);
@@ -63,8 +66,14 @@ $accquery = pg_query($connection, $acc);
      <div id="closeSearch" class="closeDiv"><a href="#"><i class="fa fa-times"></i></a></div>
    </section>
    
-   <section id="scheda">
+   <section id="scheda" class="aperto">
      <div id="closeScheda" class="closeDiv"><a href="#"><i class="fa fa-times"></i></a></div>
+     <section id="user">
+      <header>
+       <span id="uPhoto"><img src=""></span>
+       <span id="uName">Giuseppe Naponiello</span>
+      </header>
+     </section>
      <section id="lastPoi">
       <header>Ultimi punti inseriti</header>
       <article>
