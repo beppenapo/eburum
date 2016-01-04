@@ -22,3 +22,5 @@ input, select {vertical-align:middle;}
 html{font-family: 'Telex', sans-serif;}
 input, textarea, select{box-sizing:content-box;ms-box-sizing:content-box;-moz-box-sizing:content-box;-webkit-box-sizing:content-box; }
 h1, h2{font-weight:normal;}
+textarea {resize: none;}
+input:focus, textarea:focus, select:focus {outline: none !important;border:1px solid #65AAFF !important;box-shadow: 0 0 10px #65AAFF !important;}

@@ -7,12 +7,15 @@ $_SESSION['social'] = 10204537169686951;
 #select tipo
 $tipo="select * from $schema.tipo order by tipo asc;";
 $tipoquery = pg_query($connection, $tipo);
+while ($tipi = pg_fetch_assoc($tipoquery)) { $tipoList .= '<option value="'.$tipi['id'].'">'.$tipi['tipo'].'</option>'; }
 #select stato conservazione
 $sc="select * from $schema.sc order by sc asc;";
 $scquery = pg_query($connection, $sc);
+while ($stato = pg_fetch_assoc($scquery)) { $scList .= '<option value="'.$stato['id'].'">'.$stato['sc'].'</option>'; }
 #select accessibilità
 $acc="select * from $schema.acc order by acc asc;";
 $accquery = pg_query($connection, $acc);
+while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$access['id'].'">'.$access['acc'].'</option>'; }
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,19 +70,19 @@ $accquery = pg_query($connection, $acc);
                         <header>Cerca punto</header>
                         <article>
                             <input type="text" name="nome" class="cercaButt" placeholder="cerca per nome">
-                            <select name="tipo" class="cercaButt" required>
+                            <select name="tipo" class="cercaButt">
                                 <option value="" selected>-- tipo --</option>
-                                <?php  while ($tipi = pg_fetch_assoc($tipoquery)) { echo '<option value="'.$tipi['id'].'">'.$tipi['tipo'].'</option>'; } ?>
-                            <select>
-                            <select name="sc" class="cercaButt" required>
+                                <?php  echo $tipoList; ?>
+                            </select>
+                            <select name="sc" class="cercaButt">
                                 <option value="" selected>-- stato di conservazione --</option>
-                                <?php  while ($stato = pg_fetch_assoc($scquery)) { echo '<option value="'.$stato['id'].'">'.$stato['sc'].'</option>'; } ?>
-                            <select>
-                            <select name="acc" class="cercaButt" required>
+                                <?php  echo $scList; ?>
+                            </select>
+                            <select name="acc" class="cercaButt">
                                 <option value="" selected>-- accessibilità --</option>
-                                <?php  while ($access = pg_fetch_assoc($accquery)) { echo '<option value="'.$access['id'].'">'.$access['acc'].'</option>'; } ?>
-                            <select>
-                            <label for="dis" class="pointer"><input id="dis" type="checkbox" name="dis"> Area accessibile ai disabili</label>
+                                <?php  echo $accList; ?>
+                            </select>
+                            <label for="dis" class="pointer labelForm"><input id="dis" type="checkbox" name="dis"> Area accessibile ai disabili</label>
                             <button type="button" id="filtra" name="filtra">filtra risultati</button>
                         </article>
                     </section>
@@ -116,11 +119,12 @@ $accquery = pg_query($connection, $acc);
                 </section>
             </div>
         </div>
+        <?php require('inc/poiForm.php'); ?>
         <input type="hidden" id="sessione" value="<?php echo $_SESSION['id']; ?>">
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
         <script src="lib/LoadingPanel.js" type="text/javascript"></script>
-        <script src="lib/jq.js" type="text/javascript"></script>
         <script src="lib/map.js" type="text/javascript"></script>
+        <script src="lib/jq.js" type="text/javascript"></script>
     </body>
 </html>

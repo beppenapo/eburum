@@ -27,11 +27,13 @@ ul.headmenu li a:hover{color:#5C3D29;}
 #geocoder input{display:inline-block;height:18px;vertical-align:middle;}
 #geocoder input[name=query]{width:80%;}
 #geocoder input[name=find]{width:18px;padding:3px 5px;}
-*.cercaButt{display:block;margin:5px 0px;}
+*.cercaButt, *.newPoi{display:block;margin:5px 0px;}
+*.newPoi{padding:3px 5px; height:20px;}
+textarea[name=descPoi]{height:250px;}
 input.cercaButt{width:98%;}
-select.cercaButt{background:#fff;border:1px solid #a9a9a9;}
+select.cercaButt, select.newPoi{background:#fff;border:1px solid #a9a9a9;}
 select:required:invalid {color: gray;}
-label[for='dis']{ margin-bottom: 5px; display: block; background: #fff; border: 1px solid #ADABAB; width: 93.5%; padding: 0px 5px;font-size:.8rem;}
+.labelForm{ margin-bottom: 5px; display: block; background: #fff; border: 1px solid #ADABAB; width: 200px; padding: 0px 5px;font-size:.8rem;}
 button#filtra{width: 98%; background-color: #C33831; color: #fff; border: 1px solid #760E09; cursor: pointer;}
 button#filtra:hover{background-color: #760E09;}
 #bottomScheda{ position: absolute; bottom: 0; width:100%; font-size: .9rem; background-color: #cba765; color: #5C3D29;}
@@ -69,13 +71,20 @@ input[name='find']{cursor: pointer;-webkit-appearance: button;background-color:#
 #baseLayer label:nth-child(1){border-radius:3px 0px 0px 3px;}
 #baseLayer label:nth-child(2){margin-left:-5px; border-left:none;border-radius:0px 3px 3px 0px;}
 
+#newPoi{display:none; position: absolute; top: 100px; left: 35%; z-index: 5000; background: #EAEBEB; padding: 20px; width: 50%; height: auto;max-height:500px; overflow:auto;border-radius: 5px; border: 1px solid #484848; box-shadow: 0px 0px 15px #000;}
+#newPoi textarea{width:100%;}
+#newPoi button[name=salva]{background:#49A049;border:1px solid #268626;}
+#newPoi button[name=salva]:hover{background:#268626;}
+#newPoi button[name=annulla]{background: #C33831; border: 1px solid #760E09;}
+#newPoi button[name=annulla]:hover{background: #760E09;}
+#newPoi span#errori{display:none;border-radius: 5px;padding: 9px;color: #1e1212;}
 /******* CLASSI GENERICHE *********************/
-.button {border-radius: 5px;-webkit-border-radius: 5px;-moz-border-border-radius: 5px;padding: 10px;color: #FFF;text-shadow: 1px 1px 1px #949494;cursor:pointer;margin:10px auto;width:100%; font-size:1.2em; border:1px solid transparent;}
+.button {border-radius: 5px;padding: 10px;color: #FFF;text-shadow: 1px 1px 1px #949494;cursor:pointer;border:1px solid transparent;}
 .inputLabel{display:block;font: normal 10px/20px Arial, Helvetica, sans-serif;cursor:pointer;}
 .borderRadius{-webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;}
 .borderRadiusTop{-webkit-border-top-left-radius: 10px;-webkit-border-top-right-radius: 10px;-moz-border-radius-topleft: 10px;-moz-border-radius-topright: 10px;border-top-left-radius: 10px;border-top-right-radius: 10px;}
 .textShadow{text-shadow:1px 1px 1px #545454;}
-.focus, .error{border:1px solid #CC4B1C !important;}
+.error{border:1px solid #ff0000 !important; box-shadow: 0 0 10px #CC4B1C !important; background:#ffcbcb !important;}
 .opacity{opacity: 0.50;filter: Alpha(opacity=50); /* IE8 and earlier */}
 .cursor{cursor:pointer;}
 .hidden{display:none;}
@@ -105,3 +114,4 @@ div#baseLayer{margin:0px 10px;}
 .olControlModifyFeatureItemInactive:before,.olControlModifyFeatureItemActive:before{content: "\f0ad";}
 .olControlDeleteFeatureItemInactive:before,.olControlDeleteFeatureItemActive:before{content: "\f1f8";}
 .olControlSaveFeaturesItemInactive:before,.olControlSaveFeaturesItemActive:before{content: "\f0c7";}
+#msg{color: #5C3D29; background: #CBA866; display: inline-block; margin-left: 10px; border-radius: 3px; padding: 3px; border: 1px solid #5C3D29; height: 20px;display:none;}
