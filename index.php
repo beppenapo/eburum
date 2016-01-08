@@ -35,7 +35,7 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
         <meta property="og:title" content="Eburum" />
         <meta property="og:url" content="http://184.106.205.13/eburum/" />
         <meta property="og:site_name" content="Eburum" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" media="all" >
         <link href="css/style.css" rel="stylesheet" media="screen" />
         <title>Eburum</title>
     </head>
@@ -44,31 +44,67 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
             <?php require('inc/header.php'); ?>
             <div id="content">
                 <section id="search">
-                    <div id="closeSearch" class="closeDiv"><a href="#"><i class="fa fa-times"></i></a></div>
+                    <div id="closeSearch" class="closeDiv" title="nascondi pannello"><i class="fa fa-arrow-right cursor"></i></div>
+                    <header class="head"><h1></h1></header>
+                    <section class='searchMain'>
+                        <article>
+                            <h2>Dati generali</h2>
+                            <label id="tipo"><span></span></label>
+                            <label id="stato">stato di conservazione <span></span></label>
+                            <label id="acc"></label>
+                            <label id="dis"></label>
+                            <h2>Descrizione:</h2>
+                            <div id="descrizione"></div>
+                        </article>
+                    </section>
+                    <section class='searchComment'>
+                        <header class="commentToggle">Commenti</header>
+                        <div id="commentWrap">
+                            <article></article>
+                        </div>
+                    </section>
                 </section>
                 <section id="scheda" class="aperto">
-                    <div id="closeScheda" class="closeDiv"><a href="#"><i class="fa fa-times"></i></a></div>
+                    <div id="closeScheda" class="closeDiv" title="nascondi pannello"><i class="fa fa-arrow-left cursor"></i></div>
                     <section id="user">
                         <header>
                             <span id="uPhoto"> <img src='https://graph.facebook.com/<?php echo $_SESSION["social"]; ?>/picture?type=large' ></span>
                             <span id="uName"><?php echo $_SESSION["utente"]; ?></span>
                         </header>
                     </section>
-                    <section id="lastPoi">
-                        <header>Ultimi punti inseriti</header>
-                        <article>
+                    <?php if(isset($_SESSION['id'])){ ?>
+                    <section class="menuContent">
+                        <header class="mainMenu" data-sub="sub1">Menù personale</header>
+                        <article id="sub1" class="subMenu">
                         
                         </article>
                     </section>
-                    <section id="geocoder">
-                        <header>Cerca Indirizzo</header>
-                        <input type="search" id="query" name="query" class="cercaButt" value="" placeholder="Es.: Eboli viale amendola" >
-                        <input type="submit" name="find" id="geoSearch" class="fa fa-search cercaButt" value="&#xf002" >
-                        <div id="resultSearch"><ul id="resultSearchList"></ul><span id='hideSearch'>chiudi lista</span></div>
+                    <?php } ?>
+                    <section id="lastPoi" class="menuContent">
+                        <header class="mainMenu" data-sub="sub2">Ultimi punti inseriti</header>
+                        <article id="sub2" class="subMenu">
+                            <ul>
+                                <?php
+                                $lastq="select id, nome, st_x(geom) as lon, st_y(geom) as lat from eburum.poi order by id desc limit 5;";
+                                $lastex = pg_query($connection,$lastq);
+                                while($last = pg_fetch_array($lastex)){
+                                    echo "<li class='lastPoi cursor' data-id='".$last['id']."' data-ll='".$last['lon'].",".$last['lat']."'>".$last['nome']."</li>";
+                                }
+                                ?>
+                            </ul>
+                        </article>
                     </section>
-                    <section id="filtri">
-                        <header>Cerca punto</header>
-                        <article>
+                    <section id="geocoder" class="menuContent">
+                        <header class="mainMenu" data-sub="sub3">Cerca Indirizzo</header>
+                        <article id="sub3" class="subMenu">
+                            <input type="search" id="query" name="query" class="cercaButt" value="" placeholder="Es.: Eboli viale amendola" >
+                            <input type="submit" name="find" id="geoSearch" class="fa fa-search cercaButt" value="&#xf002" >
+                            <div id="resultSearch"><ul id="resultSearchList"></ul><span id='hideSearch'>chiudi lista</span></div>
+                        </article>
+                    </section>
+                    <section id="filtri" class="menuContent">
+                        <header class="mainMenu last" data-sub="sub4">Cerca punto</header>
+                        <article id="sub4" class="subMenu">
                             <input type="text" name="nome" class="cercaButt" placeholder="cerca per nome">
                             <select name="tipo" class="cercaButt">
                                 <option value="" selected>-- tipo --</option>
@@ -82,7 +118,7 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
                                 <option value="" selected>-- accessibilità --</option>
                                 <?php  echo $accList; ?>
                             </select>
-                            <label for="dis" class="pointer labelForm"><input id="dis" type="checkbox" name="dis"> Area accessibile ai disabili</label>
+                            <label for="dis" class="cursor labelForm"><input id="dis" type="checkbox" name="dis"> Area accessibile ai disabili</label>
                             <button type="button" id="filtra" name="filtra">filtra risultati</button>
                         </article>
                     </section>
@@ -121,10 +157,12 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
         </div>
         <?php require('inc/poiForm.php'); ?>
         <input type="hidden" id="sessione" value="<?php echo $_SESSION['id']; ?>">
-        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
-        <script src="lib/LoadingPanel.js" type="text/javascript"></script>
-        <script src="lib/map.js" type="text/javascript"></script>
-        <script src="lib/jq.js" type="text/javascript"></script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="http://openlayers.org/api/OpenLayers.js"></script>
+        <script src="lib/LoadingPanel.js"></script>
+        <script src="lib/ckeditor/ckeditor.js"></script>
+        <script src="lib/ckeditor/adapters/jquery.js"></script>
+        <script src="lib/map.js"></script>
+        <script src="lib/jq.js"></script>
     </body>
 </html>

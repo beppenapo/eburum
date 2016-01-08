@@ -1,29 +1,53 @@
 @import url("reset.css");
 @import url(http://fonts.googleapis.com/css?family=Maven+Pro:400,700);
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,300,200,700);
 
 html,body, #wrap{height:100%;width:100%;padding:0px;margin:0px;}
-body {font-family: 'Maven Pro', sans-serif;font-size: 1em; color: #34383d;background:white;line-height:1;overflow:hidden;}
-ul.headmenu li a:hover{-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;}
+body {font-family: 'Titillium Web', sans-serif;font-size: 1em; color: #34383d;background:white;line-height:1;overflow:hidden;}
+ul.headmenu li a:hover,header.mainMenu{-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;}
 
-#header, #search, #scheda, #map{z-index:1;}
-#header{position: absolute;top: 0;left: 0;right: 0;height: 3.5em;opacity: 0.99;background: #CBA765;}
+#header, #map,#search, #scheda{position: absolute;}
+#header, #map{z-index:1;}
+#search, #scheda{z-index:2;}
+#header{top: 0;left: 0;right: 0;height: 3.5em;opacity: 0.99;background: #CBA765;}
+#search{right:-20%;top:55px;bottom:0;width:20%;background: #EAEAD1;}
+#scheda{top:55px;left:0;bottom:0;width:20%;background: #EAEAD1;}
+#map{top:55px;bottom:0;left:0;right:0;background:#FFFFFF;}
+
 #header h1{font-size:2rem;font-weight:bold;}
 #header h1 > span{font-size:1rem;}
 #titleWrap{padding-left:4em;color:rgb(255,255,255);width:55%;}
 #headMenuWrap{width:35%;}
-.head{display:inline-block;}
+#header .head{display:inline-block;}
 ul.headmenu{float:right;}
 ul.headmenu li{display:inline-block;margin-left:20px;}
 ul.headmenu li:first-child{margin-left:0px;}
 ul.headmenu li a{font-size:25px;color:#FFF;-webkit-backface-visibility: hidden;}
 ul.headmenu li a:hover{color:#5C3D29;}
-.closeDiv{width:100%;height:25px; background:#103985;text-align:right;}
-.closeDiv i{font-size:1rem;padding:2px 10px;color:#eaebeb;}
+.closeDiv{width:100%;background:#EAEAD1;}
+.closeDiv i{font-size:1rem;padding:4px 7px;color:#5C3D29;}
+#closeSearch{position:relative;}
+#closeScheda{text-align:right;}
+/****** accordion ******/
+section.menuContent{margin:0px;padding:0px;}
+article.subMenu,#commentWrap{display:none;padding:5px 15px;}
+#commentWrap{height:49%;}
+header.mainMenu{cursor:pointer;background: #cba765; color: #5C3D29;padding:5px 10px;border-top:1px solid #5C3D29;}
+header.last{border-bottom:1px solid #5C3D29;}
+.active,header.mainMenu:hover{background:#5C3D29 !important;color:#fff !important;}  
+/**********************/
 
-#search{position:absolute;right:-20%;top:55px;bottom:0;width:20%;background: #eaebeb;}
-#scheda{position:absolute;top:55px;left:0;bottom:0;width:20%;background: #eaebeb;}
-#scheda header{color:#555753;font-size:1.3rem;}
-#scheda section{padding:5px 10px;}
+#search section{padding:15px;}
+#search header.head{background: #5C3D29; font-size: 1.3rem; color: #fff;}
+#search header h1{font-size: 1.3rem; margin-bottom: 5px; border-bottom: 1px solid #34383d;padding:10px 15px;}
+#search .searchMain, #search .searchComment{overflow: auto;}
+#search .searchMain{height: 77%; margin-bottom:1%;}
+#search .searchComment{padding:0px;}
+#search .commentToggle{background: #CBA765;border-bottom:1px solid #5C3D29;border-top:1px solid #5C3D29;cursor:pointer; padding:10px;}
+#search .searchMain article h2{font-size: 1.2rem; margin-bottom: 5px; font-weight:bold;}
+#search .searchMain article label{display:block;margin:3px 0px;}
+#user{padding:0px 5px 10px;margin-top:-15px;}
+#user header{color:#555753;font-size:1.3rem;}
 #geocoder input{display:inline-block;height:18px;vertical-align:middle;}
 #geocoder input[name=query]{width:80%;}
 #geocoder input[name=find]{width:18px;padding:3px 5px;}
@@ -40,7 +64,7 @@ button#filtra:hover{background-color: #760E09;}
 #bottomScheda footer{ padding: 5px 10px;}
 footer a{color:#5C3D29; text-decoration: none;}
 footer a:hover{ border-bottom: 1px dotted #5C3D29;}
-#map{position:absolute;top:55px;bottom:0;left:20%;right:0;background:#FFFFFF;}
+
 #mapDiv{position:relative;width:100%;height:100%;}
 #login{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:2000;display:none;}
 #logged{position:absolute;top:50px;right:20px;width:200px;height:300px;background:#fff;z-index:2000;}
@@ -89,16 +113,15 @@ input[name='find']{cursor: pointer;-webkit-appearance: button;background-color:#
 .cursor{cursor:pointer;}
 .hidden{display:none;}
 .checked{background-color:#C33831 !important;}
-.pointer{cursor:pointer;}
 /********* openlayers ********/
 .olControlAttribution {font-size: .7rem !important;left: 3px;bottom: 1px !important;position: absolute;display: block;background:rgba(255,255,255,0.7);border-radius:5px; padding:2px 5px;width:auto !important;}
 .olControlLoadingPanel {position: absolute;top:0;left:0;width: 100%;height: 100%;background: rgba( 255, 255, 255, 0.4 );display: none;}
+.olControlZoom{left:40% !important;}
 .olControlZoom a{display:inline-block !important; margin:0px !important; height: 26px !important;width: 26px !important; font-size:1rem !important; line-height: 24px !important; background: #103985 !important;}
 .olControlZoom a:hover{background:#C33831 !important;}
 .olControlZoom a#max{border-radius:0px 3px 3px 0px;border:1px solid #ccc;}
 .olControlZoom div{display:inline-block; line-height:26px; padding:0px; margin:0px;vertical-align:top;}
 div#baseLayer{margin:0px 10px;}
-#panel{margin-left:10px;}
 .olControlZoomIn{border-radius:3px 0px 0px 3px !important;border:1px solid #ccc;}
 .olControlZoomOut{border-radius:0px !important;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
 #panel div{font-family: "FontAwesome";cursor:pointer;display:inline-block;width:20px;background:#103985;color:#fff;padding:3px 5px;font-size:1rem;line-height:20px;text-align:center;}
