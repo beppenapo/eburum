@@ -24,3 +24,10 @@ input, textarea, select{box-sizing:content-box;ms-box-sizing:content-box;-moz-bo
 h1, h2{font-weight:normal;}
 textarea {resize: none;}
 input:focus, textarea:focus, select:focus {outline: none !important;border:1px solid #65AAFF !important;box-shadow: 0 0 10px #65AAFF !important;}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{ background:none; }
+::-webkit-scrollbar-thumb{background:#bbb;}
+/* HORIZONTAL BAR*/
+::-webkit-scrollbar:horizontal{height:10px;}
+::-webkit-scrollbar-track:horizontal{background:#ddd; box-shadow:none;}

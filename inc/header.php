@@ -5,11 +5,9 @@
     </div>
     <div id="headMenuWrap" class="head">
         <ul class="headmenu">
-            <li><a href="#" class="openScheda textShadow" title="cerca un punto di interesse"><i class="fa fa-search"></i></a></li>
-            <li>
-                <?php if(!isset($_SESSION['id'])){?>
-                <a href="#" class="openLogin textShadow" title="entra nell'area di lavoro"><i class="fa fa-user"></i></a></li>
-                <?php } ?>
+            <li><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" title="Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale" alt="Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale" class="transition"><i class="fa fa-creative-commons"></i></a></li>
+            <li><a href="https://github.com/beppenapo/eburum" title="codice sorgente" alt="codice sorgente" target="_blank" class="transition"><i class="fa fa-github"></i></a></li>
+            <li><a href="#" title="dettagli sulle licenze utilizzate" class="transition"><i class="fa fa-question"></i></a></li>
         </ul>
     </div> 
 </header>

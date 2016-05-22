@@ -1,9 +1,13 @@
 <?php
 session_start();
-require("inc/dbconfig.php");
-$_SESSION['utente'] = 'Giuseppe Naponiello';
-$_SESSION['id'] = 1;
-$_SESSION['social'] = 10204537169686951;
+require("inc/db.php");
+#get extent
+$extq="select st_extent(geom) as ext from eburum.poi;";
+$extres = pg_query($connection,$extq);
+$extarr = pg_fetch_array($extres);
+$ext = substr($extarr['ext'], 4, -1);
+$ext = str_replace(" ", ",",$ext);
+
 #select tipo
 $tipo="select * from $schema.tipo order by tipo asc;";
 $tipoquery = pg_query($connection, $tipo);
@@ -21,7 +25,7 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
 <html>
     <head>
         <meta charset="utf-8" />
-        <meta name="generator" content="Sublime Text2" >
+        <meta name="generator" content="Atom" >
         <meta name="author" content="Giuseppe Naponiello" >
         <meta name="robots" content="INDEX,FOLLOW" />
         <meta name="copyright" content="&copy;2015 Arc-Team" />
@@ -33,7 +37,7 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
         <meta property="og:type" content="website" />
         <meta property="og:description" content="Eburum" />
         <meta property="og:title" content="Eburum" />
-        <meta property="og:url" content="http://184.106.205.13/eburum/" />
+        <meta property="og:url" content="http://91.121.82.80/eburum/" />
         <meta property="og:site_name" content="Eburum" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" media="all" >
         <link href="css/style.css" rel="stylesheet" media="screen" />
@@ -41,6 +45,7 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
     </head>
     <body onload="init()">
         <div id="wrap">
+            <input type="hidden" name="ext" value="<?php echo $ext; ?>" >
             <?php require('inc/header.php'); ?>
             <div id="content">
                 <section id="search">
@@ -68,15 +73,19 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
                     <div id="closeScheda" class="closeDiv" title="nascondi pannello"><i class="fa fa-arrow-left cursor"></i></div>
                     <section id="user">
                         <header>
-                            <span id="uPhoto"> <img src='https://graph.facebook.com/<?php echo $_SESSION["social"]; ?>/picture?type=large' ></span>
+                        <?php if(isset($_SESSION['id'])){ ?>
+                            <span id="uPhoto"></span>
                             <span id="uName"><?php echo $_SESSION["utente"]; ?></span>
+                        <?php }else{ ?>
+                            <a href="#" class="openLogin textShadow" title="entra nell'area di lavoro"><i class="fa fa-user"></i> Effettua il login</a>
+                        <?php } ?>
                         </header>
                     </section>
                     <?php if(isset($_SESSION['id'])){ ?>
                     <section class="menuContent">
                         <header class="mainMenu" data-sub="sub1">Menù personale</header>
                         <article id="sub1" class="subMenu">
-                        
+                            <?php require("inc/usermenu.php"); ?>
                         </article>
                     </section>
                     <?php } ?>
@@ -122,7 +131,7 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
                             <button type="button" id="filtra" name="filtra">filtra risultati</button>
                         </article>
                     </section>
-                    <section id="bottomScheda">
+                    <!-- <section id="bottomScheda">
                         <footer>
                             <small>
                                 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" title="Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale" alt="Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale"><i class="fa fa-creative-commons"></i> CC-BY-SA</a> |
@@ -130,19 +139,27 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
                                 <a href="#" title="dettagli sulle licenze utilizzate"><i class="fa fa-question"></i> licenze</a>
                             </small>
                         </footer>
-                    </section>
+                    </section> -->
                 </section>
                 <section id="map">
                     <div id="mapDiv"></div>
                     <div id="baseLayer">
                         <label for="sat" class="checked"><i class="fa fa-globe"></i></label>
                         <label for="osm"><i class="fa fa-map"></i></label>
-                        <input type="radio" name="base" id="sat" value="sat" onclick="map.setBaseLayer(realvista)" checked>
+                        <input type="radio" name="base" id="sat" value="realvista" onclick="map.setBaseLayer(realvista)" checked>
                         <input type="radio" name="base" id="osm" value="osm" onclick="map.setBaseLayer(osm)">
                     </div>
                     <div id="panel" class="customEditingToolbar"></div>
+                    <div id="switcher">
+                        <ul>
+                            <li class="area cursor transition">Area naturalistica</li>
+                            <li class="edificio cursor transition">Edificio storico</li>
+                            <li class="monumento cursor transition">Monumento</li>
+                            <li class="sito cursor transition">Sito archeologico</li>
+                        </ul>
+                    </div>
                 </section>
-                <section id="login"> 
+                <section id="login">
                     <div id="loginForm" class="borderRadius">
                         <div id="closeLogin" class="closeDiv borderRadiusTop"><a href="#"><i class="fa fa-times"></i></a></div>
                         <div id="usrReg">
@@ -162,6 +179,7 @@ while ($access = pg_fetch_assoc($accquery)) { $accList .= '<option value="'.$acc
         <script src="lib/LoadingPanel.js"></script>
         <script src="lib/ckeditor/ckeditor.js"></script>
         <script src="lib/ckeditor/adapters/jquery.js"></script>
+        <script src="lib/funzioni.js"></script>
         <script src="lib/map.js"></script>
         <script src="lib/jq.js"></script>
     </body>
