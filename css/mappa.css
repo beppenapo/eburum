@@ -1,0 +1,18 @@
+@import url('custom.css');
+body>header{background:rgba(203,167,101,0.7);}
+body>footer{position:absolute;bottom:0;left:0;right:0;}
+#mappa{position:absolute;top:0;bottom:20px;left:0;right:0; z-index: 1;}
+.ol-zoom{top:70px !important;}
+#toolMap{position:absolute;top:70px;right:5px;z-index:2;}
+#toolMap>div{display:block;margin-bottom:10px;}
+
+@media screen and (max-width: 767px){
+}
+@media (min-width: 768px) and (max-width: 991px) {
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+}
+@media (min-width: 992px) and (max-width: 1199px)and (orientation: landscape){
+}
+@media screen and (min-width: 1200px) {
+}

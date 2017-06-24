@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+body {background: #d9e0e7; font-size: 12px; font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif; color: #707478;}
+body>header, body>section, body>footer{position:relative;}
+body>header{color:rgb(255,255,255);text-shadow:1px 1px 1px #545454;border-bottom:1px solid #707478;z-index:100;}
+body>header #headerLink{text-align: right;}
+body>header a,body>header i{font-size:24px;line-height: 48px !important;}
+body>header a:link,body>header a:visited,body>header a:active{color:rgb(255,255,255);}
+body>header a:hover{color:rgb(93,73,37);}
+body>footer{background:rgba(203,167,101,1);color:rgb(255,255,255);text-shadow:1px 1px 1px #545454;border-top:1px solid #707478;z-index:100;height:20px;}
+ul{list-style-type: none;padding: 0;margin: 0;}
+a:link,a:visited,a:hover, a:active{text-decoration:none;}
+
+a, .transition{
+    -webkit-transition: all .25s linear;
+    -moz-transition: all .25s linear;
+    -ms-transition: all .25s linear;
+    -o-transition: all .25s linear;
+    transition: all .25s linear;
+}
+@media screen and (max-width: 767px){
+    body:before { content: 'xs'; display: none; }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    body:before { content: 'sm'; display: none; }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    body:before { content: 'md'; display: none; }
+}
+@media (min-width: 992px) and (max-width: 1199px)and (orientation: landscape){
+    body:before { content: 'md-ls'; display: none; }
+}
+@media screen and (min-width: 1200px) {
+    body:before { content: 'lg'; display: none; }
+}
